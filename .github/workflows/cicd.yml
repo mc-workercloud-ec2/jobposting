@@ -68,3 +68,17 @@ jobs:
           service: ec2team-241214-back-job-service
           cluster: ec2team-241214-ecs-cluster
           wait-for-service-stability: true
+          
+      - name: Post a message in a channel
+        uses: slackapi/slack-github-action@v2.0.0
+        if: always()
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "<@channel> Front Build 결과: ${{ job.status }}\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        
