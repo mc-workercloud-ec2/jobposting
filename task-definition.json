@@ -1,49 +1,39 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:985539782994:task-definition/job:4",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:296062552975:task-definition/ec2team-241214-back-job-task-1:1",
     "containerDefinitions": [
         {
-            "name": "job",
-            "image": "985539782994.dkr.ecr.ap-northeast-2.amazonaws.com/job:latest",
-            "cpu": 512,
-            "memory": 1024,
+            "name": "jinwoo-back-jobposting",
+            "image": "ap-northeast-2.dkr.ecr.ap-northeast-2.amazonaws.com/jinwoo-backend:jobposting",
+            "cpu": 0,
             "portMappings": [
                 {
+                    "name": "jobposting-8888",
                     "containerPort": 8888,
                     "hostPort": 8888,
-                    "protocol": "tcp"
+                    "protocol": "tcp",
+                    "appProtocol": "http"
                 }
             ],
             "essential": true,
-            "environment": [
-                {
-                    "name": "PORT",
-                    "value": "8888"
-                }
-            ],
+            "environment": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [
-                {
-                    "name": "nofile",
-                    "softLimit": 65536,
-                    "hardLimit": 65536
-                }
-            ],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "ecslogs",
+                    "awslogs-group": "/ecs/ec2team-241214-back-job-task-1",
+                    "awslogs-create-group": "true",
                     "awslogs-region": "ap-northeast-2",
-                    "awslogs-stream-prefix": "staging-service"
+                    "awslogs-stream-prefix": "ecs"
                 }
             },
             "systemControls": []
         }
     ],
-    "family": "job",
-    "executionRoleArn": "arn:aws:iam::985539782994:role/ecs-study",
+    "family": "ec2team-241214-back-job-task-1",
+    "executionRoleArn": "arn:aws:iam::296062552975:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 4,
+    "revision": 1,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -67,6 +57,9 @@
         },
         {
             "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
         }
     ],
     "placementConstraints": [],
@@ -79,7 +72,8 @@
     ],
     "cpu": "512",
     "memory": "1024",
-    "registeredAt": "2024-11-30T04:10:24.543Z",
-    "registeredBy": "arn:aws:iam::985539782994:user/gilsu",
+    "registeredAt": "2024-12-14T02:46:00.789Z",
+    "registeredBy": "arn:aws:iam::296062552975:user/zaur",
+    "enableFaultInjection": false,
     "tags": []
 }

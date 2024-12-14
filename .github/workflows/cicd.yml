@@ -32,7 +32,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume:  arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions2
+          role-to-assume:  arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions
           aws-region: ap-northeast-2  
 
       - name: Login to Amazon ECR
@@ -45,7 +45,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: job
+          ECR_REPOSITORY: jinwoo-backend
           IMAGE_TAG: ${{ github.sha }}
 
         run: |
@@ -58,13 +58,13 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:        
           task-definition: task-definition.json
-          container-name: job
+          container-name: jinwoo-back-jobposting
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: job
-          cluster: ecs-cluster
+          service: ec2team-241214-back-job-service
+          cluster: ec2team-241214-ecs-cluster
           wait-for-service-stability: true
